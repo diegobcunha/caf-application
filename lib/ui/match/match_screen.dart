@@ -1,4 +1,4 @@
-
+import 'package:caf_application/ui/match/match_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -10,10 +10,9 @@ class MatchScreen extends StatefulHookConsumerWidget {
 }
 
 class _MatchScreen extends ConsumerState<MatchScreen> {
-  
   @override
   Widget build(BuildContext context) {
-    return Text("Home");
+    final matchController = ref.read(matchControllerProvider);
+    return Text("Partidas");
   }
-  
 }
