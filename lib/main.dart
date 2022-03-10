@@ -1,8 +1,10 @@
+import 'package:caf_application/extension/build_context_extensions.dart';
 import 'package:caf_application/ui/home/home_screen.dart';
 import 'package:caf_application/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
@@ -22,7 +24,9 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Club Amigos FutMessa",
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      onGenerateTitle: (BuildContext context) => context.localization.appTitle,
       home: HomeScreen(),
     );
   }
