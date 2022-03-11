@@ -23,7 +23,7 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
             type: BottomNavigationBarType.fixed,
             selectedItemColor: Colors.black,
             unselectedItemColor: Colors.white,
-            items: _menuItems(),
+            items: _menuItems(context),
             currentIndex: _currentIndex,
             onTap: _onTabChanged));
   }
@@ -34,9 +34,9 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
     });
   }
 
-  List<BottomNavigationBarItem> _menuItems() {
+  List<BottomNavigationBarItem> _menuItems(BuildContext contex) {
     return [
-      const BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: "Feed"),
+      const BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: "Noticías"),
       const BottomNavigationBarItem(
           icon: Icon(Icons.emoji_events), label: "Competições"),
           const BottomNavigationBarItem(icon: Icon(Icons.poll), label: "Estatísticas"),
