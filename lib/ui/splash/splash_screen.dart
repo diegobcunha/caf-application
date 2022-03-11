@@ -1,7 +1,7 @@
+import 'package:caf_application/ui/components/images_assets.dart';
 import 'package:caf_application/ui/navigation/navigation_route.dart';
 import 'package:caf_application/ui/splash/splash_screen_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SplashScreen extends StatefulHookConsumerWidget {
@@ -22,6 +22,9 @@ class _SplashScreen extends ConsumerState<SplashScreen> {
     ref.listen<NextScreen>(splashControllerProvider, (previous, current) {
       switch (current) {
         case NextScreen.login:
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(loginScreen, (route) => false);
+          break;
         case NextScreen.home:
           Navigator.of(context)
               .pushNamedAndRemoveUntil(homeScreen, (route) => false);
@@ -30,7 +33,7 @@ class _SplashScreen extends ConsumerState<SplashScreen> {
     });
     return Scaffold(
       body: SafeArea(
-          child: Center(child: Image.asset('assets/images/caf_red_logo.png'))),
+          child: Center(child: Image.asset(cafRedLogo))),
     );
   }
 }
