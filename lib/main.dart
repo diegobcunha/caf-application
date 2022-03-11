@@ -1,5 +1,6 @@
 import 'package:caf_application/extension/build_context_extensions.dart';
 import 'package:caf_application/ui/home/home_screen.dart';
+import 'package:caf_application/ui/navigation/navigation_route.dart';
 import 'package:caf_application/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       onGenerateTitle: (BuildContext context) => context.localization.appTitle,
-      home: HomeScreen(),
+      initialRoute: startScreen,
+      routes: customRoutes,
     );
   }
 }

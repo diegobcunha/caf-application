@@ -2,8 +2,6 @@ import 'package:caf_application/ui/feed/feed_screen.dart';
 import 'package:caf_application/ui/match/match_screen.dart';
 import 'package:caf_application/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomeScreen extends StatefulHookConsumerWidget {
