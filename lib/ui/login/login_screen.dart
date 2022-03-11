@@ -1,9 +1,13 @@
+import 'package:caf_application/extension/build_context_extensions.dart';
 import 'package:caf_application/ui/components/images_assets.dart';
+import 'package:caf_application/ui/components/loading_button.dart';
+import 'package:caf_application/ui/login/login_controller.dart';
+import 'package:caf_application/ui/navigation/navigation_route.dart';
 import 'package:caf_application/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../navigation/navigation_route.dart';
+import '../../datasource/result/result.dart';
 
 class LoginScreen extends StatefulHookConsumerWidget {
   @override
@@ -16,11 +20,35 @@ class _LoginScreen extends ConsumerState<LoginScreen> {
   TextEditingController _emailController = new TextEditingController();
   String _email = "";
   String _password = "";
+  bool isLoading = false;
 
   AutovalidateMode _autoValidate = AutovalidateMode.always;
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<Result<dynamic>>(loginControllerProvider, (previous, current) {
+      current.when(
+          idle: () {},
+          loading: () {
+            setState(() {
+              isLoading = true;
+            });
+          },
+          success: (result) {
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(homeScreen, (route) => false);
+            setState(() {
+              isLoading = false;
+            });
+          },
+          failure: (reason) {
+            setState(() {
+              isLoading = false;
+            });
+          });
+    });
+
+    final controllerNotifier = ref.watch(loginControllerProvider.notifier);
     return Scaffold(
         body: SafeArea(
             child: SingleChildScrollView(
@@ -34,21 +62,22 @@ class _LoginScreen extends ConsumerState<LoginScreen> {
                   padding: const EdgeInsets.only(top: 60.0),
                   child: Center(
                     child: Container(
-                        width: 200,
-                        height: 150,
+                        width: 400,
+                        height: 300,
                         child: Image.asset(cafRedLogo)),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: TextFormField(
+                    onChanged: ((value) => _email = value),
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
                     onSaved: (value) => _email = value ?? "",
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Email',
-                        hintText: 'Enter valid email id as abc@gmail.com'),
+                        border: const OutlineInputBorder(),
+                        labelText: context.localization.email,
+                        hintText: context.localization.emailHint),
                   ),
                 ),
                 Padding(
@@ -59,25 +88,19 @@ class _LoginScreen extends ConsumerState<LoginScreen> {
                     onSaved: (value) => _password = value ?? "",
                     obscureText: true,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
-                        hintText: 'Enter secure password'),
+                        border: const OutlineInputBorder(),
+                        labelText: context.localization.password,
+                        hintText: context.localization.passwordHint),
                     //validatePassword,        //Function to check validation
                   ),
                 ),
-                SizedBox(height: 24),
-                Container(
-                    height: 50,
-                    width: 250,
-                    decoration: BoxDecoration(
-                        color: secondaryColor,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: TextButton(
-                        onPressed: () => {
+                const SizedBox(height: 24),
+                LoadingButton(
+                    label: context.localization.login,
+                    onClick: () => {
+                         controllerNotifier.validateLogin(_email, _password)
                         },
-                        child: Text("Login",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 25)))),
+                    isLoading: isLoading),
               ],
             ),
           )),

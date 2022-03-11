@@ -3,5 +3,11 @@
     "news": "Noticias",
     "competitions": "Competições",
     "statistics": "Estatísticas",
-    "profile": "Perfil"
+    "profile": "Perfil",
+    "email": "E-mail",
+    "password": "Senha",
+    "emailHint": "Insira seu e-mail",
+    "passwordHint": "Insira sua senha",
+    "errorInputLogin": "E-mail ou senha inválidos, tente novamente",
+    "login": "Login"
 }
