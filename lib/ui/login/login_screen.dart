@@ -76,8 +76,15 @@ class _LoginScreen extends ConsumerState<LoginScreen> {
                     onSaved: (value) => _email = value ?? "",
                     decoration: InputDecoration(
                         border: const OutlineInputBorder(),
-                        labelText: context.localization.email,
+                        labelText: context.localization.email,  
                         hintText: context.localization.emailHint),
+                    validator: (value) {
+                      if (value?.isEmpty == true) {
+                        return 'Invalid String';
+                      }
+
+                      return null;
+                    },
                   ),
                 ),
                 Padding(
@@ -97,9 +104,8 @@ class _LoginScreen extends ConsumerState<LoginScreen> {
                 const SizedBox(height: 24),
                 LoadingButton(
                     label: context.localization.login,
-                    onClick: () => {
-                         controllerNotifier.validateLogin(_email, _password)
-                        },
+                    onClick: () =>
+                        {controllerNotifier.validateLogin(_email, _password)},
                     isLoading: isLoading),
               ],
             ),
